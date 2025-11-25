@@ -12,8 +12,8 @@ public class LibraryObject {
     private int year;
     private String publisher;
     private int pages;
-    private int number;
+    /*private int number;
     private String date;
     private String annotation;
-    private String books;
+    private String books;*/
 }

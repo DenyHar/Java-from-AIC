@@ -9,7 +9,7 @@ import lombok.*;
 @ToString(includeFieldNames = false)
 public class Newspaper extends LibraryObject {
     private int number;
-    private String name;
+    //private String name;
     private String date;
     private String annotation;
 }

@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @ToString(includeFieldNames = false)
 public class Almanac extends LibraryObject {
-    private String name;
+   /* private String name;
     private String genre;
     private int year;
     private String publisher;
-    private int pages;
+    private int pages;*/
     private String books;
 }

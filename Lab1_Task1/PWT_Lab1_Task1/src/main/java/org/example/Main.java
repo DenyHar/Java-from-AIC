@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        /// //////////////////
         BookCreator BC = new BookCreator();
         AlmanacCreator AC = new AlmanacCreator();
         NewspaperCreator NC = new NewspaperCreator();
@@ -15,6 +16,7 @@ public class Main {
         LibraryCatalog.add(new Book("Ігор", "Книга2", "Фентезі", 2022, "Друга Друкарня", 225));
         LibraryCatalog.add(new Almanac("Альманах2", "Історичний", 2020, "Перша Друкарня", 678, "Історична Книга1, Книга 5, Книга H"));
         LibraryCatalog.add(new Newspaper(13,"Правда","10.10.2025", "1. Перша. 2. Друга. 3. Третя"));
+        /// ///////////////////
 
         Random rni = new Random();
         Scanner scan = new Scanner(System.in);
