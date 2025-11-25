@@ -1,0 +1,31 @@
+### GET request to example server
+GET http://localhost:8080/
+
+### POST request to example server
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "name": "Книга Третя",
+  "author": "Автор 3",
+  "publishYear": 2012,
+  "publisher": "Видавництво 1",
+  "genre": "Наукова",
+  "pages": 231,
+  "description": "Романтична історія",
+  "quantity": 1100
+}
+
+### DELETE request
+DELETE localhost:8080/1
+
+### PUT request
+PUT localhost:8080/2
+Content-Type: application/json
+
+{
+  "author": "Автор Другий Після Пут",
+  "description": "Опис цієї книги було змінено"
+}
+
+###
