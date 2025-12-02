@@ -1,6 +1,8 @@
 package org.example.pwt_lab5;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.*;
+
 enum CoverType {
     HARD,
     SOFT
@@ -12,6 +14,17 @@ enum PageType {
 }
 @Entity
 @Table
+@FilterDefs({
+    @FilterDef(name = "pageType", parameters = @ParamDef(name = "pPageType", type = String.class)),
+    @FilterDef(name = "pages", parameters = @ParamDef(name = "pPages", type = Integer.class)),
+    @FilterDef(name = "circulation", parameters = @ParamDef(name = "pCirculation", type = Long.class))
+})
+@Filters({
+    @Filter(name = "pageType", condition = "page = :pPageType"),
+    @Filter(name = "pages", condition = "pages >= :pPages"),
+    @Filter(name = "circulation", condition = "circulation >= :pCirculation")
+})
+
 public class Notepad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +33,14 @@ public class Notepad {
     protected String publisher;
     protected String name;
     protected int pages;
-    protected CoverType cover;
+    protected String cover;
     protected String country;
     protected long circulation;
-    protected PageType page;
+    protected String page;
 
     public Notepad() {
     }
-    public Notepad(String publisher, String name,int pages, CoverType cover, String country, long circulation, PageType page) {
+    public Notepad(String publisher, String name,int pages, String cover, String country, long circulation, String page) {
         this.publisher = publisher;
         this.name = name;
         this.pages = pages;
@@ -37,7 +50,7 @@ public class Notepad {
         this.page = page;
     }
 
-    public Notepad(long id, String publisher, String name, int pages, CoverType cover, String country, int circulation, PageType page) {
+    public Notepad(long id, String publisher, String name, int pages, String cover, String country, int circulation, String page) {
         this.id = id;
         this.publisher = publisher;
         this.name = name;
@@ -56,17 +69,17 @@ public class Notepad {
     public void setName(String name) {this.name = name;}
     public int getPages() {return pages;}
     public void setPages(int pages) {this.pages = pages;}
-    public CoverType getCover() {return cover;}
-    public void setCover(CoverType cover) {this.cover = cover;}
+    public String getCover() {return cover;}
+    public void setCover(String cover) {this.cover = cover;}
     public String getCountry() {return country;}
     public void setCountry(String country) {this.country = country;}
     public long getCirculation() {return circulation;}
     public void setCirculation(long circulation) {this.circulation = circulation;}
-    public PageType getPage() {return page;}
-    public void setPage(PageType page) {this.page = page;}
+    public String getPage() {return page;}
+    public void setPage(String page) {this.page = page;}
 
     public String toString(){
-        return publisher + "; " + country  + "; " + pages + "; " + page.toString().toLowerCase() + "; " + cover.toString().toLowerCase();
+        return publisher + "; " + country  + "; " + pages + "; " + page + "; " + cover + "; " + circulation;
     }
 }
 

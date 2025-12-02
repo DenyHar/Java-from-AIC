@@ -34,7 +34,6 @@ public class NotepadServlet extends HttpServlet {
                     showNewForm(request, response);
                     break;
                 case "/insert":
-                    System.out.println("I`m doing insert");
                     insertNotepad(request, response);
                     break;
                 case "/idDel":
@@ -49,7 +48,6 @@ public class NotepadServlet extends HttpServlet {
                     showEditForm(request, response);
                     break;
                 case "/update":
-                    System.out.println("Yes, i'm trying to update");
                     updateNotepad(request, response);
                     break;
                 case "/delete":
@@ -57,6 +55,47 @@ public class NotepadServlet extends HttpServlet {
                     break;
                 case "/list":
                     listNotepads(request, response);
+                    break;
+                case "/productionCountry":
+                    request.setAttribute("command", "Country");
+                    listProductionByCountry(request, response);
+                    break;
+                case "/productionPublisher":
+                    request.setAttribute("command", "Publisher");
+                    listProductionByPublisher(request, response);
+                    break;
+                case "/topProductionCountry":
+                    listProductionTopCountry(request, response);
+                    break;
+                case "/topProductionPublisher":
+                    listProductionTopPublisher(request, response);
+                    break;
+                case "/bottomProductionCountry":
+                    listProductionBottomCountry(request, response);
+                    break;
+                case "/bottomProductionPublisher":
+                    listProductionBottomPublisher(request, response);
+                    break;
+                case "/hardNotepads":
+                    listHardNotepads(request, response);
+                    break;
+                case "/softNotepads":
+                    listSoftNotepads(request, response);
+                    break;
+                case "/country":
+                    getCountry(request, response);
+                    break;
+                case "/countryList":
+                    listByCountry(request, response);
+                    break;
+                case "/filteredPageType":
+                    listFilteredByPageType(request, response);
+                    break;
+                case "/filteredByPages":
+                    listFilteredByPages(request, response);
+                    break;
+                case "/filteredByCirculation":
+                    listFilteredByCirculation(request, response);
                     break;
             }
         }  catch (SQLException e) {
@@ -69,7 +108,54 @@ public class NotepadServlet extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
         rd.forward(request, response);
     }
-
+    private void listProductionByCountry(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> productions = notepadDao.getCirculationByCountry();
+        request.setAttribute("production", productions);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listProductionByPublisher(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> productions = notepadDao.getCirculationByPublisher();
+        request.setAttribute("production", productions);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listProductionTopCountry(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> productions = notepadDao.getCirculationTopCountry();
+        request.setAttribute("production", productions);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listProductionTopPublisher(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> productions = notepadDao.getCirculationTopPublisher();
+        request.setAttribute("production", productions);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listProductionBottomCountry(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> productions = notepadDao.getCirculationBottomCountry();
+        request.setAttribute("production", productions);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listProductionBottomPublisher(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> productions = notepadDao.getCirculationBottomPublisher();
+        request.setAttribute("production", productions);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listHardNotepads(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> notepads = notepadDao.getAllHardCover();
+        request.setAttribute("notepads", notepads);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
+    private void listSoftNotepads(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        List<Object[]> notepads = notepadDao.getAllSoftCover();
+        request.setAttribute("notepads", notepads);
+        RequestDispatcher rd = request.getRequestDispatcher("notepad-list.jsp");
+        rd.forward(request, response);
+    }
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("notepad-form.jsp");
         requestDispatcher.forward(request, response);
@@ -85,10 +171,10 @@ public class NotepadServlet extends HttpServlet {
         String publisher = request.getParameter("publisher");
         String name = request.getParameter("name");
         int pages =  Integer.parseInt(request.getParameter("pages"));
-        CoverType cover = CoverType.valueOf(request.getParameter("cover"));
+        String cover = request.getParameter("cover");
         String country = request.getParameter("country");
         int circulation = Integer.parseInt(request.getParameter("circulation"));
-        PageType page = PageType.valueOf(request.getParameter("page"));
+        String page = request.getParameter("page");
         Notepad notepad = new Notepad(publisher, name, pages, cover, country, circulation, page);
         notepadDao.save(notepad);
         response.sendRedirect("list");
@@ -98,10 +184,10 @@ public class NotepadServlet extends HttpServlet {
         String publisher = request.getParameter("publisher");
         String name = request.getParameter("name");
         int pages =  Integer.parseInt(request.getParameter("pages"));
-        CoverType cover = CoverType.valueOf(request.getParameter("cover"));
+        String cover = request.getParameter("cover");
         String country = request.getParameter("country");
         int circulation = Integer.parseInt(request.getParameter("circulation"));
-        PageType page = PageType.valueOf(request.getParameter("page"));
+        String page = request.getParameter("page");
         Notepad notepad = new Notepad(id, publisher, name, pages, cover, country, circulation, page);
         notepadDao.update(notepad);
         response.sendRedirect("list");
@@ -113,6 +199,41 @@ public class NotepadServlet extends HttpServlet {
     }
     private void getId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("id-form.jsp");
+        requestDispatcher.forward(request, response);
+    }
+    private void getCountry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("country-form.jsp");
+        requestDispatcher.forward(request, response);
+    }
+    private void listByCountry(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        String country = request.getParameter("country");
+        List<Notepad> notepads = notepadDao.getAllByCountry(country);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("notepad-list.jsp");
+        request.setAttribute("notepads", notepads);
+        requestDispatcher.forward(request, response);
+    }
+    private void listFilteredByPageType(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        //String pageType = request.getParameter("pageType");
+        String pageType = "Line";
+        List<Notepad> notepads = notepadDao.getFilteredByPageType(pageType);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("notepad-list.jsp");
+        request.setAttribute("notepads", notepads);
+        requestDispatcher.forward(request, response);
+    }
+    private void listFilteredByPages(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        //int pageType = request.getParameter("pages");
+        int pages = 15;
+        List<Notepad> notepads = notepadDao.getFilteredByPages(pages);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("notepad-list.jsp");
+        request.setAttribute("notepads", notepads);
+        requestDispatcher.forward(request, response);
+    }
+    private void listFilteredByCirculation(HttpServletRequest request, HttpServletResponse response) throws ServletException, SQLException, IOException {
+        //long pageType = request.getParameter("pages");
+        long circulation = 200000;
+        List<Notepad> notepads = notepadDao.getFilteredByCirculation(circulation);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("notepad-list.jsp");
+        request.setAttribute("notepads", notepads);
         requestDispatcher.forward(request, response);
     }
 }

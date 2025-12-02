@@ -68,8 +68,8 @@
                     <th>Notepad Cover Type: </th>
                     <td>
                         <select name="cover">
-                            <option>HARD</option>
-                            <option>SOFT</option>
+                            <option>Hard</option>
+                            <option>Soft</option>
                         </select>
                     </td>
                 </tr>
@@ -93,9 +93,9 @@
                     <th>Notepad Page Type: </th>
                     <td>
                         <select name="page">
-                            <option>BLANK</option>
-                            <option>LINE</option>
-                            <option>CELL</option>
+                            <option>Blank</option>
+                            <option>Line</option>
+                            <option>Cell</option>
                         </select>
                     </td>
                 </tr>
