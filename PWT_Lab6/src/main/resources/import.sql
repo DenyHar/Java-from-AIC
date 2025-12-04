@@ -1,0 +1,3 @@
+INSERT INTO Buyer (id, firstName, lastName, email, phoneNumber) VALUES (1,'Покупець 1', 'Покупченко 1', 'Пошта 1', '111111111'),(2,'Покупець 2', 'Покупченко 2', 'Пошта 2', '111222111');
+INSERT INTO Seller (id, firstName, lastName, email, phoneNumber) VALUES (3,'Продавець 1', 'Продавченко 1', 'Пошта 3', '222222222'),(4,'Продавець 2', 'Продавченко 2', 'Пошта 4', '222111222');
+INSERT INTO Product (id, name, price) VALUES (1, 'Product 1', 115), (2, 'Product 2', 120);
